@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Funções, Arrays, e loops</title>
+</head>
+<body>
+
+    <h1>JavaScript Interativo</h1>
+
+    <section>
+        <h2>Array and For</h2>
+        <input type="text" id="nomeLista" placeholder="Adicionar nome à lista">
+        <button id="btAdicionarNome">Adicionar</button>
+        <button id="btLimparLista">Limpar Lista</button> <!-- Botão para limpar a lista -->
+        <ul id="listaNomes"></ul>
+    </section>
+
+    <script>
+        // Variável global
+        let nomes = [];
+
+        document.getElementById("btAdicionarNome").addEventListener("click", adicionarNome);
+        document.getElementById("btLimparLista").addEventListener("click", limparLista); // evento do botão de limpar
+
+        function adicionarNome() {
+            let nome = document.getElementById("nomeLista").value;
+
+            if (nome.trim() !== "") {
+                nomes.push(nome);
+                document.getElementById("nomeLista").value = "";
+                atualizarNomes();
+            }
+        }
+
+        function removerNome(index) {
+            nomes.splice(index, 1); // Remove o item pelo índice
+            atualizarNomes();
+        }
+
+        function limparLista() {
+            nomes = []; // Zera o array
+            atualizarNomes();
+        }
+
+        function atualizarNomes() {
+            let ul = document.getElementById("listaNomes");
+            ul.innerText = "";
+
+            nomes.forEach((n, i) => {
+                let li = document.createElement("li");
+                li.innerText = `${i + 1}. ${n} `;
+
+                // Botão para remover esse item
+                let btnRemover = document.createElement("button");
+                btnRemover.innerText = "Remover";
+                btnRemover.onclick = () => removerNome(i);
+
+                li.appendChild(btnRemover);
+                ul.appendChild(li);
+            });
+        }
+    </script>
+</body>
+</html>
